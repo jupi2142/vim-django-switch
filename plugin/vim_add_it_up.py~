@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from itertools import takewhile
+import vim
+
+def create_buffer_with_total(buffer_contents):
+	cleaned_buffer_contents = clear_previous_sum(buffer_contents)
+	total_of_values = extract_ints(cleaned_buffer_contents)
+	total_rows = ['=========', 'Total: {}'.format(total_of_values)]
+	new_buffer = cleaned_buffer_contents + total_rows
+	return new_buffer
+
+def clear_previous_sum(buffer_contents):
+	return list(takewhile(lambda line: line != "="*9, buffer_contents)) #which is the same as buffer_contents[:list(buffer_contents).find("="*9)]
+
+def extract_ints(buffer_contents):
+	list_of_strings = " ".join(buffer_contents).split(" ")	#it turns out, the buffer have an entry for every line
+	return sum([int(row) for row in list_of_strings if row.isdigit()])
+		
+vim.current.buffer[:] = create_buffer_with_total(list(vim.current.buffer))
+vim.command("tabnew /home/jupi/F_talks1.txt")
+

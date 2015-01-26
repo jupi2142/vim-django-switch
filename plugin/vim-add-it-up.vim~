@@ -1,0 +1,12 @@
+python import sys
+python import vim
+python sys.path.append(vim.eval('expand("<sfile>:h")'))
+
+"Functions
+"
+"
+function! AddItUp()
+pyfile /home/jupi/.vim/bundle/vim-add-it-up/plugin/vim_add_it_up.py
+endfunction
+
+command! -nargs=* Add call AddItUp(<args>)
